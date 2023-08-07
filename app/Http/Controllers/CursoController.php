@@ -11,8 +11,6 @@ class CursoController extends Controller
 {
     public function index()
     {
-
-
         $cursos = Curso::orderby('id', 'desc')->paginate();
 
         return view('cursos.index', compact('cursos'));
@@ -25,14 +23,6 @@ class CursoController extends Controller
     public function store(StoreCurso $request)
     {
 
-        $curso = new Curso();
-        /*
-        $curso->name = $request->name;
-        $curso->descripcion = $request->descripcion;
-        $curso->categoria = $request->categoria;
-
-        $curso->save();
-        */
 
         $curso = Curso::create($request->all());
 
@@ -54,12 +44,18 @@ class CursoController extends Controller
     public function update(StoreCurso $request, Curso $curso)
     {
 
-        $curso->name = $request->name;
+        /*$curso->name = $request->name;
         $curso->descripcion = $request->descripcion;
         $curso->categoria = $request->categoria;
 
-        $curso->save();
+        $curso->save();*/
 
-        return redirect()->route('cursos.show', $curso->id);
+        $curso->update($request->all());
+        return redirect()->route('cursos.show', $curso);
+    }
+    public function destroy(Curso $curso)
+    {
+        $curso->delete();
+        return redirect()->route('cursos.index');
     }
 }

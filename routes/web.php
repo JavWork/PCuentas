@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\ContactanosController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,18 +19,12 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', HomeController::class);
+Route::get('/', HomeController::class)->name('home');
 
-Route::get('cursos', [CursoController::class, 'index'])->name('cursos.index');
+//Las mimas rutas pero con la url asignarutas
+//Route::resource('asignaturas', CursoController::class)->parameters(['asignaturas' => 'curso'])->names('cursos');
+Route::resource('cursos', CursoController::class);
+Route::view('nosotros', 'nosotros')->name('nosotros');
 
-Route::get('cursos/create', [CursoController::class, 'create'])->name('cursos.create');
-
-Route::post('cursos', [CursoController::class, 'store'])->name('cursos.store');
-
-Route::get('cursos/{curso}', [CursoController::class, 'show'])->name('cursos.show');
-
-//routa para la función edit
-Route::get('cursos/{curso}/edit', [CursoController::class, 'edit'])->name('cursos.edit');
-
-//ruta para enviar el formulario editado
-Route::put('cursos/{curso}', [CursoController::class, 'update'])->name('cursos.update');
+//Ruta para enviar correos
+Route::get('contactanos', [ContactanosController::class, 'index'])->name('contactanos.index');
